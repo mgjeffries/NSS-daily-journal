@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <header>
+    <div><img src="404.jpg" alt=""></div>
+    <h1>MGJ Commonplace Book</h1>
+  </header>
+  <main>
+    <section class="current-entry">
+      <form action="">
+        <fieldset>
+          <label for="journalDate">Date of entry</label>
+          <input type="date" name="journalDate" id="journalDate">
+        </fieldset>
+      </form>
+      <form action="">
+        <fieldset>
+          <label for="mood">Mood</label>
+          <select name="mood">
+            <option value="happy">happy</option>
+            <option value="meh">meh</option>
+            <option value="sad">sad</option>
+          </select>
+        </fieldset>
+      </form>
+      <form action="">
+        <fieldset>
+          <label for="conceptsCovered">Concepts Covered</label>
+          <input type="text" name="conceptsCovered" id="conceptsCovered">
+        </fieldset>
+      </form>
+      <form action="">
+        <fieldset>
+          <label for="journalEntry">Journal Entry</label>
+          <textarea name="journalEntry" rows="4" cols="50"></textarea>
+        </fieldset>
+      </form>
+      
+    </section>
+    <section class="past-entries">
+      <article class="past-entry">Past Entry 1</article>
+      <article class="past-entry">Past Entry 2</article>
+    </section>
+  </main>
+  <footer>
+    <p>Created By MGJ</p>
+    <a href="https://github.com/mgjeffries"></a>
+  </footer>
+</body>
+</html>
