@@ -36,5 +36,5 @@ export const useJournalEntries = () => {
       (currentEntry, nextEntry) =>
           Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
   )
-  return sortedByDate
+  return sortedByDate.reverse()
 }
