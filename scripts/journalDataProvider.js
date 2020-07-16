@@ -36,5 +36,7 @@ export const useJournalEntries = () => {
       (currentEntry, nextEntry) =>
           Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
   )
+  
+  // reverse the sorted list to organize by most recent entry.
   return sortedByDate.reverse()
 }
