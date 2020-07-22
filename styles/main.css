@@ -1,4 +1,49 @@
+:root {
+  --page-background: #FBFBF2;
+  --dark-background: #A6A2A2;
+  --light-background: #E5E6E4;
+}
+
+body {
+  margin: 0;
+  background-color: var(--page-background);
+}
+
+header {
+  display: flex;
+  background-color: var(--dark-background);
+}
+
+header img {
+  width: 10rem;
+  margin: 5px;
+}
+
+main {
+  padding: 5px;
+}
+
+.current-entry {
+  background-color: var(--light-background);
+  margin: 6px;
+}
+
 fieldset {
   display: flex;
   flex-direction: column;
+}
+.past-entries {
+  padding: 5px;
+}
+
+.past-entry {
+  background-color: var(--dark-background);
+  margin: 5px;
+  padding: 0 20px;
+  border: solid black 2px;
+
+}
+
+footer {
+  background-color: var(--dark-background);
 }
