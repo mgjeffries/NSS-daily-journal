@@ -14,12 +14,18 @@ header {
   background-color: var(--dark-background);
 }
 
+header img {
+  width: 10rem;
+  margin: 5px;
+}
+
 main {
   padding: 5px;
 }
 
 .current-entry {
   background-color: var(--light-background);
+  margin: 6px;
 }
 
 fieldset {
@@ -33,6 +39,9 @@ fieldset {
 .past-entry {
   background-color: var(--dark-background);
   margin: 5px;
+  padding: 0 20px;
+  border: solid black 2px;
+
 }
 
 footer {
