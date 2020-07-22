@@ -46,4 +46,9 @@ fieldset {
 
 footer {
   background-color: var(--dark-background);
+  padding: 10px;
+  /* added bottom padding to create a sticky footer */
+  padding-bottom: 3rem; 
 }
+
+
