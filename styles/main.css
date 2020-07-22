@@ -1,4 +1,38 @@
+:root {
+
+}
+
+body {
+  margin: 0;
+  background-color: #FBFBF2;
+}
+
+header {
+  display: flex;
+  background-color: #A6A2A2;
+}
+
+main {
+  padding: 5px;
+}
+
+.current-entry {
+  background-color: #E5E6E4;
+}
+
 fieldset {
   display: flex;
   flex-direction: column;
+}
+.past-entries {
+  padding: 5px;
+}
+
+.past-entry {
+  background-color: #A6A2A2;
+  margin: 5px;
+}
+
+footer {
+  background-color: #A6A2A2;
 }
