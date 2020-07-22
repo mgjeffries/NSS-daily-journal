@@ -1,15 +1,17 @@
 :root {
-
+  --page-background: #FBFBF2;
+  --dark-background: #A6A2A2;
+  --light-background: #E5E6E4;
 }
 
 body {
   margin: 0;
-  background-color: #FBFBF2;
+  background-color: var(--page-background);
 }
 
 header {
   display: flex;
-  background-color: #A6A2A2;
+  background-color: var(--dark-background);
 }
 
 main {
@@ -17,7 +19,7 @@ main {
 }
 
 .current-entry {
-  background-color: #E5E6E4;
+  background-color: var(--light-background);
 }
 
 fieldset {
@@ -29,10 +31,10 @@ fieldset {
 }
 
 .past-entry {
-  background-color: #A6A2A2;
+  background-color: var(--dark-background);
   margin: 5px;
 }
 
 footer {
-  background-color: #A6A2A2;
+  background-color: var(--dark-background);
 }
