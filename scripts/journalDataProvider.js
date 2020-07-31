@@ -27,3 +27,20 @@ export const getJournalEntries = () => {
       journal = entryArray
     })
 }
+
+export const saveJournalEntry = (entry) => {
+  console.log(entry)
+
+  
+  const jsonEntry = JSON.stringify(entry)
+
+  return fetch("http://localhost:3000/entries", {
+    method: "POST",
+    headers: {
+      "Content-Type": "applicaton/json"
+    },
+    body: jsonEntry
+  })
+    .then(getJournalEntries)
+    // TODO: dispatch custom state changed event
+}
