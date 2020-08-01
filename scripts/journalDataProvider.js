@@ -23,17 +23,13 @@ export const getJournalEntries = () => {
 }
 
 export const saveJournalEntry = (entry) => {
-  console.log(entry)
 
-  
   const jsonEntry = JSON.stringify(entry)
-
-  console.log(jsonEntry)
 
   return fetch("http://localhost:3000/entries", {
     method: "POST",
     headers: {
-      "Content-Type": "applicaton/json"
+        "Content-Type": "application/json"
     },
     body: jsonEntry
   })
