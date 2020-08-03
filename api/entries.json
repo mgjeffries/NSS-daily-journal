@@ -20,6 +20,27 @@
       "concept": "Lab Day",
       "entry": "Working on adding scripts to sites. Back in my comfort zone",
       "mood": "happy"
+    },
+    {
+      "date": "2020-08-01",
+      "mood": "happy",
+      "concept": "Squashed Bug",
+      "entry": "Found a typo in my saveEntry function, where the header was misspelled, so my POST requests were failing.",
+      "id": 4
+    },
+    {
+      "date": "2020-07-31",
+      "mood": "sad",
+      "concept": "Bug in the House",
+      "entry": "Trying to get journal entries to save. I can console log the data going to the saveEntry function, so I know that it is good, but for some reason it shows up as a blank field in the database, with only an ID. Explained the problem to Red, but we didn't see anything obvious. Gonna have to take a break and try again later. If I still have this problem on Monday, I'll ask an instructor for help.\n",
+      "id": 5
+    },
+    {
+      "date": "2020-07-28",
+      "mood": "happy",
+      "concept": "Component Coupling",
+      "entry": "Learning about component coupling. I like the idea of keeping components isolated with well defined interfaces so that they can be removed or replaced without side effects. Very cool!",
+      "id": 6
     }
   ]
 }
