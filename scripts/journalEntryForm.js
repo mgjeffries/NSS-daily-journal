@@ -1,5 +1,7 @@
 import { saveJournalEntry } from "./journalDataProvider.js"
 
+const contentCharacterLimit = 200
+let charactersRemaining = contentCharacterLimit
 const contentTarget = document.querySelector(".current-entry")
 const eventHub = document.querySelector(".container")
 
@@ -26,9 +28,34 @@ eventHub.addEventListener("click", clickEvent => {
   }
 })
 
+
 export const listForm = () => {
   render()
+  listenForComposition()
 }
+
+const listenForComposition = () => {
+
+  const currentEntryField = document.querySelector("#current-entry--content")
+  
+  currentEntryField.addEventListener("keyup", compositionEvent => {
+    const currentText = compositionEvent.target.value
+    const charactersUsed = currentText.length
+    renderCharactersRemaining(contentCharacterLimit, charactersUsed)
+  })
+}
+
+const renderCharactersRemaining = (limit, used) => {
+  const contentTarget = document.querySelector(".character-limit")
+  contentTarget.innerHTML = displayCharactersRemaining(limit, used)
+}
+
+const displayCharactersRemaining = (limit, used) => {
+  return `
+  <div class="character-limit">CharactersRemaining = ${limit - used}/${limit}</div>
+  `
+}
+
 
 const render = () => {
   contentTarget.innerHTML = `
@@ -57,7 +84,8 @@ const render = () => {
     <form action="">
       <fieldset>
         <label for="journalEntry">Journal Entry</label>
-        <textarea name="journalEntry" rows="4" cols="50" id="current-entry--content"></textarea>
+        <textarea name="journalEntry" rows="4" cols="50" id="current-entry--content" maxlength=${contentCharacterLimit}></textarea>
+        ${displayCharactersRemaining(charactersRemaining, contentCharacterLimit)}
       </fieldset>
     </form>
     <button type="button" class="current-entry--submitt">Submit Entry</button>
