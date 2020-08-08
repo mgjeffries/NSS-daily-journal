@@ -1,7 +1,8 @@
 import { saveJournalEntry } from "./journalDataProvider.js"
+import { listenForComposition, renderCharactersRemaining } from "./characterCounter.js"
 
 const contentCharacterLimit = 200
-let charactersRemaining = contentCharacterLimit
+const conceptCharacterLimit = 20
 const contentTarget = document.querySelector(".current-entry")
 const eventHub = document.querySelector(".container")
 
@@ -35,31 +36,9 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
 
 export const listForm = () => {
   render()
-  listenForComposition()
+  listenForComposition("current-entry--content", contentCharacterLimit)
+  listenForComposition("current-entry--conceptCovered", conceptCharacterLimit) 
 }
-
-const listenForComposition = () => {
-
-  const currentEntryField = document.querySelector("#current-entry--content")
-  
-  currentEntryField.addEventListener("keyup", compositionEvent => {
-    const currentText = compositionEvent.target.value
-    const charactersUsed = currentText.length
-    renderCharactersRemaining(contentCharacterLimit, charactersUsed)
-  })
-}
-
-const renderCharactersRemaining = (limit, used) => {
-  const contentTarget = document.querySelector(".character-limit")
-  contentTarget.innerHTML = displayCharactersRemaining(limit, used)
-}
-
-const displayCharactersRemaining = (limit, used) => {
-  return `
-  <div class="character-limit">CharactersRemaining = ${limit - used}/${limit}</div>
-  `
-}
-
 
 const render = () => {
   contentTarget.innerHTML = `
@@ -82,14 +61,15 @@ const render = () => {
     <form action="">
       <fieldset>
         <label for="conceptCovered">Concept Covered</label>
-        <input type="text" name="conceptCovered" id="current-entry--conceptCovered">
+        <input type="text" name="conceptCovered" id="current-entry--conceptCovered" maxlength=${conceptCharacterLimit}>
+        ${renderCharactersRemaining(conceptCharacterLimit, conceptCharacterLimit)}
       </fieldset>
     </form>
     <form action="">
       <fieldset>
         <label for="journalEntry">Journal Entry</label>
         <textarea name="journalEntry" rows="4" cols="50" id="current-entry--content" maxlength=${contentCharacterLimit}></textarea>
-        ${displayCharactersRemaining(charactersRemaining, contentCharacterLimit)}
+        ${renderCharactersRemaining(contentCharacterLimit, contentCharacterLimit)}
       </fieldset>
     </form>
     <button type="button" class="current-entry--submitt">Submit Entry</button>
