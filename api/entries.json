@@ -55,6 +55,13 @@
       "concept": "Bug Created",
       "entry": "Apparently the new character counter interferes with the submit entry event flow. I'll need to check on that when I get back to this. ",
       "id": 8
+    },
+    {
+      "date": "2020-08-08",
+      "mood": "happy",
+      "concept": "It was a feature! Not a bug!",
+      "entry": "Got back to checking the event flow when the submit button is pressed. It looks like I never set the list of journal entries to re-render when the entry data changed. Fixed now, and running great!",
+      "id": 9
     }
   ]
 }
