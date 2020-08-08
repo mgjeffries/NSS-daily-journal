@@ -28,6 +28,10 @@ eventHub.addEventListener("click", clickEvent => {
   }
 })
 
+eventHub.addEventListener("journalEntryChange", customEvent => {
+  listForm()
+})
+
 
 export const listForm = () => {
   render()
