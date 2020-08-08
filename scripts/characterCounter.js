@@ -5,18 +5,18 @@ export const listenForComposition = (targetID, characterLimit) => {
   currentEntryField.addEventListener("keyup", compositionEvent => {
     const currentText = compositionEvent.target.value
     const charactersUsed = currentText.length
-    updateCharactersRemaining(characterLimit, charactersUsed)
+    updateCharactersRemaining( targetID, characterLimit, charactersUsed )
   })
 }
 
 
-export const renderCharactersRemaining = (limit, used) => {
+export const renderCharactersRemaining = ( targetID, limit, used ) => {
   return `
-  <div class="character-limit">CharactersRemaining = ${limit - used}/${limit}</div>
+  <div class="character-limit--${targetID}">CharactersRemaining = ${limit - used}/${limit}</div>
   `
 }
 
-const updateCharactersRemaining = (limit, used) => {
-  const contentTarget = document.querySelector(".character-limit")
-  contentTarget.innerHTML = renderCharactersRemaining(limit, used)
+const updateCharactersRemaining = ( targetID, limit, used ) => {
+  const contentTarget = document.querySelector(`.character-limit--${targetID}`)
+  contentTarget.innerHTML = renderCharactersRemaining( targetID, limit, used)
 }

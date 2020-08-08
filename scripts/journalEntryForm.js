@@ -62,14 +62,14 @@ const render = () => {
       <fieldset>
         <label for="conceptCovered">Concept Covered</label>
         <input type="text" name="conceptCovered" id="current-entry--conceptCovered" maxlength=${conceptCharacterLimit}>
-        ${renderCharactersRemaining(conceptCharacterLimit, conceptCharacterLimit)}
+        ${renderCharactersRemaining( "current-entry--conceptCovered", conceptCharacterLimit, conceptCharacterLimit )}
       </fieldset>
     </form>
     <form action="">
       <fieldset>
         <label for="journalEntry">Journal Entry</label>
         <textarea name="journalEntry" rows="4" cols="50" id="current-entry--content" maxlength=${contentCharacterLimit}></textarea>
-        ${renderCharactersRemaining(contentCharacterLimit, contentCharacterLimit)}
+        ${renderCharactersRemaining( "current-entry--content", contentCharacterLimit, contentCharacterLimit )}
       </fieldset>
     </form>
     <button type="button" class="current-entry--submitt">Submit Entry</button>
