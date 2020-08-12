@@ -2,8 +2,7 @@ const eventHub = document.querySelector(".container")
 let targets = []
 
 eventHub.addEventListener("keyup", compositionEvent => {
-  //check if the composition is on one of the targetIDs
-  //if(compositionEvent.target.id)
+  
   targets.forEach( target => {
     if(target.targetID === compositionEvent.target.id) {
       
