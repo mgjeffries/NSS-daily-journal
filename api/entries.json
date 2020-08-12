@@ -69,6 +69,13 @@
       "concept": "Character Counter",
       "entry": "Implemented the character counter on the concept covered field. Created a few problems with shared variables along the way, which I solved by making them local & unique to the target Id.",
       "id": 10
+    },
+    {
+      "date": "2020-08-12",
+      "mood": "happy",
+      "concept": "Character Counter",
+      "entry": "Asked Steve for tips on how to make the counter more modular. He suggested using module state, which led me to moving the event listener over to the module. Eliminated an export! Easier to use!",
+      "id": 11
     }
   ]
 }
