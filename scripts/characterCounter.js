@@ -1,22 +1,35 @@
-export const listenForComposition = (targetID, characterLimit) => {
+const eventHub = document.querySelector(".container")
+let targets = []
 
-  const currentEntryField = document.querySelector(`#${targetID}`)
+eventHub.addEventListener("keyup", compositionEvent => {
   
-  currentEntryField.addEventListener("keyup", compositionEvent => {
-    const currentText = compositionEvent.target.value
-    const charactersUsed = currentText.length
-    updateCharactersRemaining( targetID, characterLimit, charactersUsed )
+  targets.forEach( target => {
+    if(target.targetID === compositionEvent.target.id) {
+      
+      const currentText = compositionEvent.target.value
+      const charactersUsed = currentText.length
+      updateCharactersRemaining( target.targetID, target.characterLimit, charactersUsed)
+      }
+    })
+  }
+)
+
+export const setupAndRenderCharacterCounter = (targetID, characterLimit) => {
+  targets.push({
+    targetID: targetID,
+    characterLimit: characterLimit
   })
-}
 
-
-export const renderCharactersRemaining = ( targetID, limit, used ) => {
-  return `
-  <div class="character-limit--${targetID}">CharactersRemaining = ${limit - used}/${limit}</div>
-  `
+  return render(targetID, characterLimit, characterLimit)
 }
 
 const updateCharactersRemaining = ( targetID, limit, used ) => {
   const contentTarget = document.querySelector(`.character-limit--${targetID}`)
-  contentTarget.innerHTML = renderCharactersRemaining( targetID, limit, used)
+  contentTarget.innerHTML = render( targetID, limit, used)
+}
+
+const render = ( targetID, limit, used ) => {
+  return `
+  <div class="character-limit--${targetID}">CharactersRemaining = ${limit - used}/${limit}</div>
+  `
 }

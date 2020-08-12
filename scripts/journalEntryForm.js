@@ -1,5 +1,5 @@
 import { saveJournalEntry } from "./journalDataProvider.js"
-import { listenForComposition, renderCharactersRemaining } from "./characterCounter.js"
+import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -36,8 +36,6 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
 
 export const listForm = () => {
   render()
-  listenForComposition("current-entry--content", contentCharacterLimit)
-  listenForComposition("current-entry--conceptCovered", conceptCharacterLimit) 
 }
 
 const render = () => {
@@ -62,14 +60,14 @@ const render = () => {
       <fieldset>
         <label for="conceptCovered">Concept Covered</label>
         <input type="text" name="conceptCovered" id="current-entry--conceptCovered" maxlength=${conceptCharacterLimit}>
-        ${renderCharactersRemaining( "current-entry--conceptCovered", conceptCharacterLimit, conceptCharacterLimit )}
+        ${setupAndRenderCharacterCounter( "current-entry--conceptCovered", conceptCharacterLimit )}
       </fieldset>
     </form>
     <form action="">
       <fieldset>
         <label for="journalEntry">Journal Entry</label>
         <textarea name="journalEntry" rows="4" cols="50" id="current-entry--content" maxlength=${contentCharacterLimit}></textarea>
-        ${renderCharactersRemaining( "current-entry--content", contentCharacterLimit, contentCharacterLimit )}
+        ${setupAndRenderCharacterCounter( "current-entry--content", contentCharacterLimit )}
       </fieldset>
     </form>
     <button type="button" class="current-entry--submitt">Submit Entry</button>
