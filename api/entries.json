@@ -81,27 +81,27 @@
   "moods": [
     {
       "id": 1,
-      "mood": "happy"
+      "name": "happy"
     },
     {
       "id": 2,
-      "mood": "meh"
+      "name": "meh"
     },
     {
       "id": 3,
-      "mood": "sad"
+      "name": "sad"
     },
     {
       "id": 4,
-      "mood": "ominous"
+      "name": "ominous"
     },
     {
       "id": 5,
-      "mood": "Optimistic"
+      "name": "optimistic"
     },
     {
       "id": 6,
-      "mood": "Optimistic"
+      "name": "adventurous"
     }
   ]
 }
