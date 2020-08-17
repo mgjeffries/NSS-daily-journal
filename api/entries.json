@@ -5,77 +5,103 @@
       "date": "07/6/2020",
       "concept": "Start Day",
       "entry": "John Talked to the class most of the day",
-      "mood": "meh"
+      "moodId": 2
     },
     {
       "id": 2,
       "date": "07/08/2020",
       "concept": "HTML & CSS",
       "entry": "Jumped in to creating pages with css and flexbox. Feeling overwhelmed",
-      "mood": "sad"
+      "moodId": 3
     },
     {
       "id": 3,
       "date": "07/16/2020",
       "concept": "Lab Day",
       "entry": "Working on adding scripts to sites. Back in my comfort zone",
-      "mood": "happy"
+      "moodId": 1
     },
     {
       "date": "2020-08-01",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "Squashed Bug",
       "entry": "Found a typo in my saveEntry function, where the header was misspelled, so my POST requests were failing.",
       "id": 4
     },
     {
       "date": "2020-07-31",
-      "mood": "sad",
+      "moodId": 3,
       "concept": "Bug in the House",
       "entry": "Trying to get journal entries to save. I can console log the data going to the saveEntry function, so I know that it is good, but for some reason it shows up as a blank field in the database, with only an ID. Explained the problem to Red, but we didn't see anything obvious. Gonna have to take a break and try again later. If I still have this problem on Monday, I'll ask an instructor for help.\n",
       "id": 5
     },
     {
       "date": "2020-07-28",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "Component Coupling",
       "entry": "Learning about component coupling. I like the idea of keeping components isolated with well defined interfaces so that they can be removed or replaced without side effects. Very cool!",
       "id": 6
     },
     {
       "date": "2020-08-04",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "Character Counter",
       "entry": "First draft of the character counter is working. I'm stoked! So cool to see it work. Needs to be moved to its own module. That is a task for tomorrow.",
       "id": 7
     },
     {
       "date": "2020-08-04",
-      "mood": "sad",
+      "moodId": 3,
       "concept": "Bug Created",
       "entry": "Apparently the new character counter interferes with the submit entry event flow. I'll need to check on that when I get back to this. ",
       "id": 8
     },
     {
       "date": "2020-08-08",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "It was a feature! Not a bug!",
       "entry": "Got back to checking the event flow when the submit button is pressed. It looks like I never set the list of journal entries to re-render when the entry data changed. Fixed now, and running great!",
       "id": 9
     },
     {
       "date": "2020-08-08",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "Character Counter",
       "entry": "Implemented the character counter on the concept covered field. Created a few problems with shared variables along the way, which I solved by making them local & unique to the target Id.",
       "id": 10
     },
     {
       "date": "2020-08-12",
-      "mood": "happy",
+      "moodId": 1,
       "concept": "Character Counter",
       "entry": "Asked Steve for tips on how to make the counter more modular. He suggested using module state, which led me to moving the event listener over to the module. Eliminated an export! Easier to use!",
       "id": 11
+    }
+  ],
+  "moods": [
+    {
+      "id": 1,
+      "name": "happy"
+    },
+    {
+      "id": 2,
+      "name": "meh"
+    },
+    {
+      "id": 3,
+      "name": "sad"
+    },
+    {
+      "id": 4,
+      "name": "ominous"
+    },
+    {
+      "id": 5,
+      "name": "optimistic"
+    },
+    {
+      "id": 6,
+      "name": "adventurous"
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { saveJournalEntry } from "./journalDataProvider.js"
 import { setupAndRenderCharacterCounter } from "./characterCounter.js"
+import { getMoods, useMoods } from "./moodProvider.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -11,15 +12,13 @@ eventHub.addEventListener("click", clickEvent => {
   if (clickEvent.target.className === "current-entry--submitt") {
 
     const entryDate = document.querySelector("#current-entry--journalDate").value
-    const entryMood = document.querySelector("#current-entry--mood").value
+    const entryMood = parseInt(document.querySelector("#current-entry--mood").value)
     const entryConceptCovered = document.querySelector("#current-entry--conceptCovered").value
     const entryContent = document.querySelector("#current-entry--content").value
 
-
-
     const newEntry = {
       date: entryDate,
-      mood: entryMood,
+      moodId: entryMood,
       concept: entryConceptCovered,
       entry: entryContent
     }
@@ -30,15 +29,25 @@ eventHub.addEventListener("click", clickEvent => {
 })
 
 eventHub.addEventListener("journalEntryChange", customEvent => {
-  listForm()
+  render()
 })
 
 
 export const listForm = () => {
-  render()
+  getMoods()
+    .then( () => {
+      render()
+    })
 }
 
 const render = () => {
+  const moods = useMoods()
+  const moodsOptions = moods.map(mood => {
+    return `
+    <option value="${mood.id}">${mood.name}</option>
+    `
+  }).join("")
+  
   contentTarget.innerHTML = `
   <form action="">
     <fieldset>
@@ -50,9 +59,7 @@ const render = () => {
       <fieldset>
         <label for="mood">Mood</label>
         <select name="mood" id="current-entry--mood">
-          <option value="happy">happy</option>
-          <option value="meh">meh</option>
-          <option value="sad">sad</option>
+          ${moodsOptions}
         </select>
       </fieldset>
     </form>

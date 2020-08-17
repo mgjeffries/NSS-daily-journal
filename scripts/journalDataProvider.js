@@ -8,14 +8,14 @@ export const useJournalEntries = () => {
       (currentEntry, nextEntry) =>
           Date.parse(currentEntry.date) - Date.parse(nextEntry.date)
   )
-  
+   
   // reverse the sorted list to organize by most recent entry.
   return sortedByDate.reverse()
 }
 
 
 export const getJournalEntries = () => {
-  return  fetch("http://localhost:3000/entries")
+  return  fetch("http://localhost:3000/entries?_expand=mood")
     .then(entryData => entryData.json())
     .then(entryArray => {
       journal = entryArray

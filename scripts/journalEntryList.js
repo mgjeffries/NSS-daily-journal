@@ -12,6 +12,7 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
 // function for listing entries to the dom
 export const listEntries = () => {
   // get the entries
+
   getJournalEntries()
     .then( () => {
       const journalEntries = useJournalEntries()
