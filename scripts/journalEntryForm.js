@@ -12,15 +12,13 @@ eventHub.addEventListener("click", clickEvent => {
   if (clickEvent.target.className === "current-entry--submitt") {
 
     const entryDate = document.querySelector("#current-entry--journalDate").value
-    const entryMood = document.querySelector("#current-entry--mood").value
+    const entryMood = parseInt(document.querySelector("#current-entry--mood").value)
     const entryConceptCovered = document.querySelector("#current-entry--conceptCovered").value
     const entryContent = document.querySelector("#current-entry--content").value
 
-
-
     const newEntry = {
       date: entryDate,
-      mood: entryMood,
+      moodId: entryMood,
       concept: entryConceptCovered,
       entry: entryContent
     }
