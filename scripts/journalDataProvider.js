@@ -1,6 +1,6 @@
 const eventHub = document.querySelector(".container")
+const journalEntryChange = new CustomEvent("journalEntryChange")
 let journal = []
-
 
 
 export const useJournalEntries = () => {
@@ -35,9 +35,18 @@ export const saveJournalEntry = (entry) => {
   })
     .then(getJournalEntries)
     .then( () => {
-    const journalEntryChange = new CustomEvent("journalEntryChange")
     eventHub.dispatchEvent(journalEntryChange)
   }
   )
 
+}
+
+export const deleteJournalEntry = entryId => {
+  return fetch(`http://localhost:3000/entries/${entryId}`, {
+    method: "DELETE"
+  })
+  .then(getJournalEntries)
+  .then( () => {
+    eventHub.dispatchEvent(journalEntryChange)}
+    )
 }
