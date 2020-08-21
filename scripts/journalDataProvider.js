@@ -40,6 +40,24 @@ export const saveJournalEntry = (entry) => {
   )
 
 }
+export const editJournalEntry = (entry) => {
+
+  const jsonEntry = JSON.stringify(entry)
+
+  return fetch(`http://localhost:3000/entries/${entry.id}`, {
+    method: "PUT",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: jsonEntry
+  })
+    .then(getJournalEntries)
+    .then( () => {
+    eventHub.dispatchEvent(journalEntryChange)
+  }
+  )
+
+}
 
 export const deleteJournalEntry = entryId => {
   return fetch(`http://localhost:3000/entries/${entryId}`, {
