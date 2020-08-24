@@ -48,7 +48,8 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
 
 eventHub.addEventListener("click", clickEvent => {
   if(clickEvent.target.className.startsWith("current-entry-discard")) {
-    render()
+    const journalEntryChange = new CustomEvent("journalEntryChange")
+    eventHub.dispatchEvent(journalEntryChange)
   }
 })
 
@@ -128,13 +129,13 @@ const populateFormFromData = entryData => {
 }
 
 const submissionControls = entryData => {
-  if(entryData.hasOwnProperty('id')){
+  if(entryData.id === 0){
+    return `<button type="button" class="current-entry-submitt--${entryData.id}">Submit Entry</button>`
+  }
+  else {
     return `
     <button type="button" class="current-entry-submitt--${entryData.id}">Save Edits</button>
     <button type="button" class="current-entry-discard--${entryData.id}">Discard Edits</button>
     `
-  }
-  else {
-    return `<button type="button" class="current-entry-submitt--${entryData.id}">Submit Entry</button>`
   }
 }
