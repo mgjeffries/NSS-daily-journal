@@ -1,6 +1,7 @@
 import { saveJournalEntry, useJournalEntries, editJournalEntry } from "./journalDataProvider.js"
 import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 import { getMoods, useMoods } from "./moodProvider.js"
+import { useTags, getTags, saveTag } from "./tagProvider.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -16,21 +17,37 @@ eventHub.addEventListener("click", clickEvent => {
 
     getFormElements(entryId)
     
-    const formData = {
-      date: formElements.date.value,
-      moodId: parseInt(formElements.moodId.value),
-      concept: formElements.concept.value, 
-      entry: formElements.entry.value
-    }
-    if (entryId === "0") {
-      saveJournalEntry(formData)
-    }
-    else {
-      formData.id = parseInt(formElements.id.value)
-      editJournalEntry(formData)
+    const tagsArray = formElements.tags.value.split(",")
+    const newTags = tagsArray.filter( newTag => {
+      return (! useTags().some( tag => tag.subject === newTag))
+    })
+    
+    const tagPromises = newTags.map( tag => {
+      return saveTag( { subject: tag } )
+    })
 
-    }
-
+    Promise.all(tagPromises)
+    .then( () => {
+      const tagIds = tagsArray.map( tagName => {
+        return useTags().find( t => t.subject === tagName ).id
+      })
+   
+      const formData = {
+        date: formElements.date.value,
+        moodId: parseInt(formElements.moodId.value),
+        concept: formElements.concept.value, 
+        entry: formElements.entry.value,
+        tags: tagIds
+      }
+      if (entryId === "0") {
+        saveJournalEntry(formData)
+      }
+      else {
+        formData.id = parseInt(formElements.id.value)
+        editJournalEntry(formData)
+      }
+    
+    })
   }
 })
 
@@ -56,6 +73,7 @@ eventHub.addEventListener("click", clickEvent => {
 
 export const listForm = () => {
   getMoods()
+  .then(getTags)
     .then( () => {
       render()
     })
