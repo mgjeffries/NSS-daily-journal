@@ -40,7 +40,6 @@ eventHub.addEventListener("click", clickEvent => {
 })
 
 
-
 eventHub.addEventListener("editJournalEntry", customEvent => {
   const entryId = parseInt(customEvent.detail.entryId)
   const entryData = useJournalEntries().find( e => e.id === entryId)

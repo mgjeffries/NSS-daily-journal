@@ -21,13 +21,21 @@ eventHub.addEventListener("click", clickEvent => {
   }
 })
 
-export const journalEntryHTML = (entry) =>{
+export const journalEntryHTML = (entry, relatedTags) =>{
   return `
   <article class="past-entry" id="entry-${entry.id}">
     <h2 class="entry-concept">${entry.concept}</h2>
     <div class="entry-mood">${entry.mood.name}</div>
     <div class="entry-date">${entry.date}</div>
     <p class="entry-entry">${entry.entry}</p>
+    <ul>
+      ${relatedTags.map( tag => {
+        return `
+        <li>${tag.subject}</li>
+        `
+        }).join("")
+      }
+    </li>
     <button id="entry-delete-button--${entry.id}">Delete</button>
     <button id="entry-edit-button--${entry.id}">Edit</button>
   </article>
