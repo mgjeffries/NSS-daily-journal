@@ -16,6 +16,7 @@ export const getTags = () => {
 export const saveTag = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
+  let savedtagId = 0
 
   return fetch("http://localhost:3000/tags", {
     method: "POST",
@@ -24,8 +25,11 @@ export const saveTag = (entry) => {
     },
     body: jsonEntry
   })
+    .then( res => res.json())
+    .then( tag => savedtagId = tag.id)
     .then(getTags)
     .then( () => {
     eventHub.dispatchEvent(tagChange)
-  })
+    })
+    .then( () => savedtagId)
 }

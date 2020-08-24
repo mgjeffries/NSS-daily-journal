@@ -41,21 +41,19 @@ eventHub.addEventListener("click", clickEvent => {
 
 const saveEntryTags = newEntryId => {
   const tagsArray = formElements.tags.value.split(",")
-  const newTags = tagsArray.filter( newTag => {
-    return (! useTags().some( tag => tag.subject === newTag))
+
+  const tagIdPromises = tagsArray.map(inputTag => {
+    if (useTags().some( t => t.subject === inputTag)) {
+      return useTags().find( t => t.subject === inputTag ).id
+    }
+    else {
+      return saveTag( { subject: inputTag } )
+    }
   })
 
-  const tagPromises = newTags.map( tag => {
-    return saveTag( { subject: tag } )
-  })
-
-  Promise.all(tagPromises)
-  .then( () => {
-    const tagIds = tagsArray.map( tagName => {
-      return useTags().find( t => t.subject === tagName ).id
-    })
-
-    tagIds.forEach( tagId => {
+  Promise.all(tagIdPromises)
+  .then( resolvedIds => {
+    resolvedIds.forEach( tagId => {
       saveEntryTag( 
         {
           entryId: newEntryId, 
