@@ -2,6 +2,7 @@ import { saveJournalEntry, useJournalEntries, editJournalEntry } from "./journal
 import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 import { getMoods, useMoods } from "./moodProvider.js"
 import { useTags, getTags, saveTag } from "./tagProvider.js"
+import { saveEntryTag } from "./entryTagsProvider.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -31,14 +32,23 @@ eventHub.addEventListener("click", clickEvent => {
       const tagIds = tagsArray.map( tagName => {
         return useTags().find( t => t.subject === tagName ).id
       })
+
+      tagIds.forEach( tagId => {
+        saveEntryTag( 
+          {
+            entryId: entryId, 
+            tagId: tagId
+          })
+      })
+      
    
       const formData = {
         date: formElements.date.value,
         moodId: parseInt(formElements.moodId.value),
         concept: formElements.concept.value, 
         entry: formElements.entry.value,
-        tags: tagIds
       }
+
       if (entryId === "0") {
         saveJournalEntry(formData)
       }
