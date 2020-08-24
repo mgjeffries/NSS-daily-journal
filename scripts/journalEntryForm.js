@@ -119,6 +119,7 @@ const getFormElements = (entryId) => {
   formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
   formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
   formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
+  formElements.tags = document.querySelector(`#current-entry-tags--${entryId}`)
 }
 
 const submissionControls = entryData => {
