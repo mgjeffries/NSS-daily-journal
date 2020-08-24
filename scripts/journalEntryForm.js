@@ -72,7 +72,7 @@ const render = (entryData = {}, target = contentTarget) => {
   const moods = useMoods()
   const moodsOptions = moods.map(mood => {
     return `
-    <option value="${mood.id}">${mood.name}</option>
+    <option value="${mood.id}" ${(mood.id === entryData.moodId) ? "selected" : ""}>${mood.name}</option>
     `
   }).join("")
   
@@ -86,7 +86,7 @@ const render = (entryData = {}, target = contentTarget) => {
     <form action="">
       <fieldset>
         <label for="mood">Mood</label>
-        <select name="mood" id="current-entry-mood--${entryData.id}" value="${entryData.moodId}">
+        <select name="mood" id="current-entry-mood--${entryData.id}" >
           ${moodsOptions}
         </select>
       </fieldset>
