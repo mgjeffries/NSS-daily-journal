@@ -78,10 +78,10 @@
       "id": 11
     },
     {
-      "date": "",
-      "moodId": 1,
-      "concept": "",
-      "entry": "aasdf",
+      "date": "2020-08-24",
+      "moodId": 6,
+      "concept": "Edits",
+      "entry": "Initially got edits working at the top of the page, but I wasn't satisfied with them taking place in context. This morning I did a big re-factor to get them working on the entries themselves.",
       "id": 12
     }
   ],
