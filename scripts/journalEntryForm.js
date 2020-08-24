@@ -35,8 +35,7 @@ eventHub.addEventListener("click", clickEvent => {
 eventHub.addEventListener("editJournalEntry", customEvent => {
   const entryId = parseInt(customEvent.detail.entryId)
   const entryData = useJournalEntries().find( e => e.id === entryId)
-  getFormElements()
-  populateFormFromData(entryData)
+  render(entryData)
 })
 
 
@@ -44,7 +43,11 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
   render()
 })
 
-
+eventHub.addEventListener("click", clickEvent => {
+  if(clickEvent.target.className === "current-entry--discard") {
+    render()
+  }
+})
 
 export const listForm = () => {
   getMoods()
@@ -53,7 +56,7 @@ export const listForm = () => {
     })
 }
 
-const render = () => {
+const render = (entryData = {}) => {
   const moods = useMoods()
   const moodsOptions = moods.map(mood => {
     return `
@@ -91,9 +94,13 @@ const render = () => {
         ${setupAndRenderCharacterCounter( "current-entry--content", contentCharacterLimit )}
       </fieldset>
     </form>
-    <button type="button" class="current-entry--submitt">Submit Entry</button>
+    ${submissionControls(entryData)}
   </section>
-    `
+  `
+  if (entryData.hasOwnProperty('id')){
+    getFormElements()
+    populateFormFromData(entryData)
+  }
 }
 
 
@@ -111,4 +118,16 @@ const populateFormFromData = entryData => {
   formElements.entryMood.value = entryData.moodId
   formElements.entryConceptCovered.value = entryData.concept
   formElements.entryContent.value = entryData.entry
+}
+
+const submissionControls = entryData => {
+  if(entryData.hasOwnProperty('id')){
+    return `
+    <button type="button" class="current-entry--submitt">Save Edits</button>
+    <button type="button" class="current-entry--discard">Discard Edits</button>
+    `
+  }
+  else {
+    return '<button type="button" class="current-entry--submitt">Submit Entry</button>'
+  }
 }
