@@ -4,8 +4,20 @@ const eventHub = document.querySelector(".container")
 
 eventHub.addEventListener("click", clickEvent => {
   if (clickEvent.target.id.startsWith("entry-delete-button")) {
-    const [ prefix, entryID ] = clickEvent.target.id.split("--")
-    deleteJournalEntry(entryID)
+    const [ prefix, entryId ] = clickEvent.target.id.split("--")
+    deleteJournalEntry(entryId)
+  }
+})
+
+eventHub.addEventListener("click", clickEvent => {
+  if (clickEvent.target.id.startsWith("entry-edit-button")) {
+    const [ prefix, entryId ] = clickEvent.target.id.split("--")
+    const editEntryEvent = new CustomEvent("editJournalEntry", {
+      detail: {
+        entryId: entryId
+      }
+    })
+    eventHub.dispatchEvent(editEntryEvent)
   }
 })
 
@@ -17,6 +29,7 @@ export const journalEntryHTML = (entry) =>{
     <div class="entry-date">${entry.date}</div>
     <p class="entry-entry">${entry.entry}</p>
     <button id="entry-delete-button--${entry.id}">Delete</button>
+    <button id="entry-edit-button--${entry.id}">Edit</button>
   </article>
   `
 }
