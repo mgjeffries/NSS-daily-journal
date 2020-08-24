@@ -120,14 +120,6 @@ const getFormElements = (entryId) => {
   formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
 }
 
-const populateFormFromData = entryData => {
-  formElements.id.value = entryData.id
-  formElements.date.value = entryData.date
-  formElements.moodId.value = entryData.moodId
-  formElements.concept.value = entryData.concept
-  formElements.entry.value = entryData.entry
-}
-
 const submissionControls = entryData => {
   if(entryData.id === 0){
     return `<button type="button" class="current-entry-submitt--${entryData.id}">Submit Entry</button>`
