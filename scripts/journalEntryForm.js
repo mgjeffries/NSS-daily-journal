@@ -39,29 +39,7 @@ eventHub.addEventListener("click", clickEvent => {
   }
 })
 
-const saveEntryTags = newEntryId => {
-  const tagsArray = formElements.tags.value.split(",")
 
-  const tagIdPromises = tagsArray.map(inputTag => {
-    if (useTags().some( t => t.subject === inputTag)) {
-      return useTags().find( t => t.subject === inputTag ).id
-    }
-    else {
-      return saveTag( { subject: inputTag } )
-    }
-  })
-
-  Promise.all(tagIdPromises)
-  .then( resolvedIds => {
-    resolvedIds.forEach( tagId => {
-      saveEntryTag( 
-        {
-          entryId: newEntryId, 
-          tagId: tagId
-        })
-      })
-  })
-}
 
 eventHub.addEventListener("editJournalEntry", customEvent => {
   const entryId = parseInt(customEvent.detail.entryId)
@@ -161,4 +139,28 @@ const submissionControls = entryData => {
     <button type="button" class="current-entry-discard--${entryData.id}">Discard Edits</button>
     `
   }
+}
+
+const saveEntryTags = newEntryId => {
+  const tagsArray = formElements.tags.value.split(",")
+
+  const tagIdPromises = tagsArray.map(inputTag => {
+    if (useTags().some( t => t.subject === inputTag)) {
+      return useTags().find( t => t.subject === inputTag ).id
+    }
+    else {
+      return saveTag( { subject: inputTag } )
+    }
+  })
+
+  Promise.all(tagIdPromises)
+  .then( resolvedIds => {
+    resolvedIds.forEach( tagId => {
+      saveEntryTag( 
+        {
+          entryId: newEntryId, 
+          tagId: tagId
+        })
+      })
+  })
 }
