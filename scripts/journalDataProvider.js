@@ -25,6 +25,7 @@ export const getJournalEntries = () => {
 export const saveJournalEntry = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
+  let savedId = 0
 
   return fetch("http://localhost:3000/entries", {
     method: "POST",
@@ -33,11 +34,12 @@ export const saveJournalEntry = (entry) => {
     },
     body: jsonEntry
   })
+    .then( res => res.json())
+    .then( newEntry => savedId = newEntry.id)
     .then(getJournalEntries)
-    .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)
-  }
-  )
+    .then(dispatchChangeEvent)
+    .then( () => savedId)
+
 
 }
 export const editJournalEntry = (entry) => {
@@ -52,10 +54,7 @@ export const editJournalEntry = (entry) => {
     body: jsonEntry
   })
     .then(getJournalEntries)
-    .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)
-  }
-  )
+    .then( dispatchChangeEvent )
 
 }
 
@@ -64,7 +63,7 @@ export const deleteJournalEntry = entryId => {
     method: "DELETE"
   })
   .then(getJournalEntries)
-  .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)}
-    )
+  .then( dispatchChangeEvent )
 }
+
+const dispatchChangeEvent = () => eventHub.dispatchEvent(journalEntryChange)

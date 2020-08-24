@@ -130,10 +130,6 @@
     {
       "id": 3,
       "subject": "fetch"
-    },
-    {
-      "subject": "",
-      "id": 4
     }
   ],
   "entrytags": [
@@ -156,11 +152,6 @@
       "id": 2,
       "entryId": 9,
       "tagId": 2
-    },
-    {
-      "entryId": "0",
-      "tagId": 4,
-      "id": 3
     }
   ]
 }

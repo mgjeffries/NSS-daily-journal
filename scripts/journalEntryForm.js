@@ -27,39 +27,40 @@ eventHub.addEventListener("click", clickEvent => {
       return saveTag( { subject: tag } )
     })
 
-    Promise.all(tagPromises)
-    .then( () => {
-      const tagIds = tagsArray.map( tagName => {
-        return useTags().find( t => t.subject === tagName ).id
-      })
+    const formData = {
+      date: formElements.date.value,
+      moodId: parseInt(formElements.moodId.value),
+      concept: formElements.concept.value, 
+      entry: formElements.entry.value,
+    }
 
-      tagIds.forEach( tagId => {
-        saveEntryTag( 
-          {
-            entryId: entryId, 
-            tagId: tagId
+    if (entryId === "0") {
+      saveJournalEntry(formData)
+      .then( newEntryId => {
+        Promise.all(tagPromises)
+        .then( () => {
+          const tagIds = tagsArray.map( tagName => {
+            return useTags().find( t => t.subject === tagName ).id
           })
-      })
-      
-   
-      const formData = {
-        date: formElements.date.value,
-        moodId: parseInt(formElements.moodId.value),
-        concept: formElements.concept.value, 
-        entry: formElements.entry.value,
-      }
-
-      if (entryId === "0") {
-        saveJournalEntry(formData)
-      }
-      else {
-        formData.id = parseInt(formElements.id.value)
-        editJournalEntry(formData)
-      }
     
-    })
+          tagIds.forEach( tagId => {
+            saveEntryTag( 
+              {
+                entryId: newEntryId, 
+                tagId: tagId
+              })
+            })
+        })
+      })
+    }
+    else {
+      formData.id = parseInt(formElements.id.value)
+      editJournalEntry(formData)
+    }
+    
   }
 })
+
 
 
 eventHub.addEventListener("editJournalEntry", customEvent => {
