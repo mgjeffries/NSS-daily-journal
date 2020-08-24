@@ -4,6 +4,7 @@ import { getMoods, useMoods } from "./moodProvider.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
+const tagsCharacterLimit = 20
 const contentTarget = document.querySelector(".current-entry")
 const eventHub = document.querySelector(".container")
 const formElements = {}
@@ -82,31 +83,31 @@ const render = (entryData = {}, target = contentTarget) => {
       <label for="journalDate">Date of entry</label>
       <input type="date" name="journalDate" id="current-entry-journalDate--${entryData.id}" value="${entryData.date}">
     </fieldset>
-  </form>
-    <form action="">
-      <fieldset>
-        <label for="mood">Mood</label>
-        <select name="mood" id="current-entry-mood--${entryData.id}" >
-          ${moodsOptions}
-        </select>
-      </fieldset>
-    </form>
-    <form action="">
-      <fieldset>
-        <label for="conceptCovered">Concept Covered</label>
-        <input type="text" name="conceptCovered" id="current-entry-conceptCovered--${entryData.id}" maxlength=${conceptCharacterLimit} value="${entryData.concept}">
-        ${setupAndRenderCharacterCounter( `current-entry-conceptCovered--${entryData.id}`, conceptCharacterLimit )}
-      </fieldset>
-    </form>
-    <form action="">
-      <fieldset>
-        <label for="journalEntry">Journal Entry</label>
-        <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
-        ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
-      </fieldset>
-    </form>
+    <fieldset>
+      <label for="mood">Mood</label>
+      <select name="mood" id="current-entry-mood--${entryData.id}" >
+        ${moodsOptions}
+      </select>
+    </fieldset>
+    <fieldset>
+      <label for="conceptCovered">Concept Covered</label>
+      <input type="text" name="conceptCovered" id="current-entry-conceptCovered--${entryData.id}" maxlength=${conceptCharacterLimit} value="${entryData.concept}">
+      ${setupAndRenderCharacterCounter( `current-entry-conceptCovered--${entryData.id}`, conceptCharacterLimit )}
+    </fieldset>
+    <fieldset>
+      <label for="journalEntry">Journal Entry</label>
+      <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
+      ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
+    </fieldset>
+    <fieldset>
+      <label for="tags">Tags</label>
+      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
+    </fieldset>
+    <fieldset>
     ${submissionControls(entryData)}
-  </section>
+    </fieldset>
+    </form>
+  </form>
   `
 }
 
