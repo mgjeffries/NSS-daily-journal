@@ -10,6 +10,14 @@ eventHub.addEventListener("journalEntryChange", customEvent => {
   listEntries()
   }
 )
+eventHub.addEventListener("entryTagChange", customEvent => {
+  listEntries()
+  }
+)
+eventHub.addEventListener("TagChange", customEvent => {
+  listEntries()
+  }
+)
 
 // function for listing entries to the dom
 export const listEntries = () => {
