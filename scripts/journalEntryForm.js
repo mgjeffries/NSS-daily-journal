@@ -35,6 +35,10 @@ eventHub.addEventListener("click", clickEvent => {
     else {
       formData.id = parseInt(entryId)
       editJournalEntry(formData)
+        .then( () => {
+          debugger
+          saveEntryTags(entryId)
+        })
     }
     
   }
@@ -133,7 +137,7 @@ const saveEntryTags = newEntryId => {
     resolvedIds.forEach( tagId => {
       saveEntryTag( 
         {
-          entryId: newEntryId, 
+          entryId: parseInt(newEntryId), 
           tagId: tagId
         })
       })
