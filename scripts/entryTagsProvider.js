@@ -1,5 +1,6 @@
 const eventHub = document.querySelector(".container")
 const entryTagChange = new CustomEvent("entryTagChange")
+const dispatchChangeEvent = () => eventHub.dispatchEvent(entryTagChange)
 let entryTags = []
 
 
@@ -25,7 +26,26 @@ export const saveEntryTag = (entry) => {
     body: jsonEntry
   })
     .then(getEntryTags)
-    .then( () => {
-    eventHub.dispatchEvent(entryTagChange)
+    .then(dispatchChangeEvent)
+}
+
+export const deleteEntryTagByIds = (entryId, tagId) => {
+  entryId = parseInt(entryId)
+  tagId = parseInt(tagId)
+  const entryTagToDelete = useEntryTagByIds(entryId, tagId)
+  return deleteEntryTag(entryTagToDelete.id)
+}
+
+const deleteEntryTag = entryTagId => {
+  return fetch(`http://localhost:3000/entryTags/${entryTagId}`, {
+    method: "DELETE"
+  })
+  .then(getEntryTags)
+  .then(dispatchChangeEvent)
+}
+
+const useEntryTagByIds = (entryId, tagId) => {
+  return entryTags.find( et => {
+    return et.entryId === entryId && et.tagId === tagId
   })
 }

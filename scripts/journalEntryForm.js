@@ -3,7 +3,7 @@ import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 import { getMoods, useMoods } from "./moodProvider.js"
 import { useTags, getTags, saveTag } from "./tagProvider.js"
 import { saveEntryTag } from "./entryTagsProvider.js"
-import { findTagsByEntry } from "./tags.js"
+import { findTagsByEntryId, tagEditHtml } from "./tags.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -36,7 +36,6 @@ eventHub.addEventListener("click", clickEvent => {
       formData.id = parseInt(entryId)
       editJournalEntry(formData)
         .then( () => {
-          debugger
           saveEntryTags(entryId)
         })
     }
@@ -110,7 +109,11 @@ const render = (entryData = {}, target = contentTarget) => {
       <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
       ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
     </fieldset>
+    <fieldset>
+      <label for="tags">Tags</label>
+      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
       ${tagForm(entryData)}
+    </fieldset>
     <fieldset>
     ${submissionControls(entryData)}
     </fieldset>
@@ -145,16 +148,12 @@ const saveEntryTags = newEntryId => {
 }
 
 const tagForm = entryData => {
-  let tagsValue = ''
   if(entryData.id !== 0){
-    tagsValue = findTagsByEntry(entryData.id).map(t => t.subject).join(",")
+    return tagEditHtml(entryData.id)
   }
-  return `
-    <fieldset>
-      <label for="tags">Tags</label>
-      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="${tagsValue}">
-    </fieldset>
-    `
+  else {
+    return ''
+  }
 }
 
 
