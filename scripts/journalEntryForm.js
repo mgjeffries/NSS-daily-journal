@@ -32,7 +32,7 @@ eventHub.addEventListener("click", clickEvent => {
       })
     }
     else {
-      formData.id = parseInt(formElements.id.value)
+      formData.id = parseInt(entryId)
       editJournalEntry(formData)
     }
     
@@ -165,8 +165,6 @@ const submissionControls = entryData => {
 }
 
 const getFormElements = (entryId) => {
-  formElements.id = {}
-  formElements.id.value = entryId
   formElements.date = document.querySelector(`#current-entry-journalDate--${entryId}`)
   formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
   formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
