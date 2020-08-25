@@ -3,6 +3,7 @@ import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 import { getMoods, useMoods } from "./moodProvider.js"
 import { useTags, getTags, saveTag } from "./tagProvider.js"
 import { saveEntryTag } from "./entryTagsProvider.js"
+import { findTagsByEntry } from "./tags.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
@@ -140,14 +141,16 @@ const saveEntryTags = newEntryId => {
 }
 
 const tagForm = entryData => {
-  if(entryData.id === 0){
-    return `
+  let tagsValue = ''
+  if(entryData.id !== 0){
+    tagsValue = findTagsByEntry(entryData.id).map(t => t.subject).join(",")
+  }
+  return `
     <fieldset>
       <label for="tags">Tags</label>
-      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
+      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="${tagsValue}">
     </fieldset>
     `
-  }
 }
 
 
