@@ -105,10 +105,7 @@ const render = (entryData = {}, target = contentTarget) => {
       <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
       ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
     </fieldset>
-    <fieldset>
-      <label for="tags">Tags</label>
-      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
-    </fieldset>
+      ${tagForm(entryData)}
     <fieldset>
     ${submissionControls(entryData)}
     </fieldset>
@@ -117,28 +114,6 @@ const render = (entryData = {}, target = contentTarget) => {
   `
 }
 
-
-const getFormElements = (entryId) => {
-  formElements.id = {}
-  formElements.id.value = entryId
-  formElements.date = document.querySelector(`#current-entry-journalDate--${entryId}`)
-  formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
-  formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
-  formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
-  formElements.tags = document.querySelector(`#current-entry-tags--${entryId}`)
-}
-
-const submissionControls = entryData => {
-  if(entryData.id === 0){
-    return `<button type="button" class="current-entry-submitt--${entryData.id}">Submit Entry</button>`
-  }
-  else {
-    return `
-    <button type="button" class="current-entry-submitt--${entryData.id}">Save Edits</button>
-    <button type="button" class="current-entry-discard--${entryData.id}">Discard Edits</button>
-    `
-  }
-}
 
 const saveEntryTags = newEntryId => {
   const tagsArray = formElements.tags.value.split(",")
@@ -162,4 +137,39 @@ const saveEntryTags = newEntryId => {
         })
       })
   })
+}
+
+const tagForm = entryData => {
+  if(entryData.id === 0){
+    return `
+    <fieldset>
+      <label for="tags">Tags</label>
+      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
+    </fieldset>
+    `
+  }
+}
+
+
+
+const submissionControls = entryData => {
+  if(entryData.id === 0){
+    return `<button type="button" class="current-entry-submitt--${entryData.id}">Submit Entry</button>`
+  }
+  else {
+    return `
+    <button type="button" class="current-entry-submitt--${entryData.id}">Save Edits</button>
+    <button type="button" class="current-entry-discard--${entryData.id}">Discard Edits</button>
+    `
+  }
+}
+
+const getFormElements = (entryId) => {
+  formElements.id = {}
+  formElements.id.value = entryId
+  formElements.date = document.querySelector(`#current-entry-journalDate--${entryId}`)
+  formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
+  formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
+  formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
+  formElements.tags = document.querySelector(`#current-entry-tags--${entryId}`)
 }

@@ -83,20 +83,6 @@
       "concept": "Edits",
       "entry": "Initially got edits working at the top of the page, but I wasn't satisfied with them taking place in context. This morning I did a big re-factor to get them working on the entries themselves.",
       "id": 12
-    },
-    {
-      "date": "",
-      "moodId": 1,
-      "concept": "",
-      "entry": "a",
-      "id": 13
-    },
-    {
-      "date": "",
-      "moodId": 1,
-      "concept": "",
-      "entry": "aa",
-      "id": 14
     }
   ],
   "moods": [
@@ -149,6 +135,10 @@
     {
       "subject": "ad",
       "id": 6
+    },
+    {
+      "subject": "a",
+      "id": 7
     }
   ],
   "entrytags": [
@@ -171,11 +161,6 @@
       "id": 2,
       "entryId": 9,
       "tagId": 2
-    },
-    {
-      "entryId": 14,
-      "tagId": 4,
-      "id": 3
     }
   ]
 }
