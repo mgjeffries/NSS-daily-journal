@@ -6,7 +6,7 @@ let tags = []
 export const useTags = () => tags.slice()
 
 export const getTags = () => {
-  return fetch("http://localhost:3000/tags")
+  return fetch("http://localhost:8088/tags")
     .then(res => res.json())
     .then( tagsArray => {
       tags = tagsArray
@@ -18,7 +18,7 @@ export const saveTag = (entry) => {
   const jsonEntry = JSON.stringify(entry)
   let savedtagId = 0
 
-  return fetch("http://localhost:3000/tags", {
+  return fetch("http://localhost:8088/tags", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"

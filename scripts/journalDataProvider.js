@@ -15,7 +15,7 @@ export const useJournalEntries = () => {
 
 
 export const getJournalEntries = () => {
-  return  fetch("http://localhost:3000/entries?_expand=mood")
+  return  fetch("http://localhost:8088/entries")
     .then(entryData => entryData.json())
     .then(entryArray => {
       journal = entryArray
@@ -27,7 +27,7 @@ export const saveJournalEntry = (entry) => {
   const jsonEntry = JSON.stringify(entry)
   let savedId = 0
 
-  return fetch("http://localhost:3000/entries", {
+  return fetch("http://localhost:8088/entries", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -46,7 +46,7 @@ export const editJournalEntry = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
 
-  return fetch(`http://localhost:3000/entries/${entry.id}`, {
+  return fetch(`http://localhost:8088/entries/${entry.id}`, {
     method: "PUT",
     headers: {
         "Content-Type": "application/json"
@@ -59,7 +59,7 @@ export const editJournalEntry = (entry) => {
 }
 
 export const deleteJournalEntry = entryId => {
-  return fetch(`http://localhost:3000/entries/${entryId}`, {
+  return fetch(`http://localhost:8088/entries/${entryId}`, {
     method: "DELETE"
   })
   .then(getJournalEntries)

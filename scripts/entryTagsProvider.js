@@ -7,7 +7,7 @@ let entryTags = []
 export const useEntryTags = () => entryTags.slice()
 
 export const getEntryTags = () => {
-  return fetch("http://localhost:3000/entryTags")
+  return fetch("http://localhost:8088/entryTags")
     .then(res => res.json())
     .then( entryTagsArray => {
       entryTags = entryTagsArray
@@ -18,7 +18,7 @@ export const saveEntryTag = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
 
-  return fetch("http://localhost:3000/entryTags", {
+  return fetch("http://localhost:8088/entryTags", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
@@ -37,7 +37,7 @@ export const deleteEntryTagByIds = (entryId, tagId) => {
 }
 
 const deleteEntryTag = entryTagId => {
-  return fetch(`http://localhost:3000/entryTags/${entryTagId}`, {
+  return fetch(`http://localhost:8088/entryTags/${entryTagId}`, {
     method: "DELETE"
   })
   .then(getEntryTags)
