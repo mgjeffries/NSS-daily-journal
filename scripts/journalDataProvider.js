@@ -15,7 +15,7 @@ export const useJournalEntries = () => {
 
 
 export const getJournalEntries = () => {
-  return  fetch("http://localhost:3000/entries?_expand=mood")
+  return  fetch("http://localhost:8088/entries")
     .then(entryData => entryData.json())
     .then(entryArray => {
       journal = entryArray
@@ -25,26 +25,28 @@ export const getJournalEntries = () => {
 export const saveJournalEntry = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
+  let savedId = 0
 
-  return fetch("http://localhost:3000/entries", {
+  return fetch("http://localhost:8088/entries", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
     },
     body: jsonEntry
   })
+    .then( res => res.json())
+    .then( newEntry => savedId = newEntry.id)
     .then(getJournalEntries)
-    .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)
-  }
-  )
+    .then(dispatchChangeEvent)
+    .then( () => savedId)
+
 
 }
 export const editJournalEntry = (entry) => {
 
   const jsonEntry = JSON.stringify(entry)
 
-  return fetch(`http://localhost:3000/entries/${entry.id}`, {
+  return fetch(`http://localhost:8088/entries/${entry.id}`, {
     method: "PUT",
     headers: {
         "Content-Type": "application/json"
@@ -52,19 +54,16 @@ export const editJournalEntry = (entry) => {
     body: jsonEntry
   })
     .then(getJournalEntries)
-    .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)
-  }
-  )
+    .then( dispatchChangeEvent )
 
 }
 
 export const deleteJournalEntry = entryId => {
-  return fetch(`http://localhost:3000/entries/${entryId}`, {
+  return fetch(`http://localhost:8088/entries/${entryId}`, {
     method: "DELETE"
   })
   .then(getJournalEntries)
-  .then( () => {
-    eventHub.dispatchEvent(journalEntryChange)}
-    )
+  .then( dispatchChangeEvent )
 }
+
+const dispatchChangeEvent = () => eventHub.dispatchEvent(journalEntryChange)

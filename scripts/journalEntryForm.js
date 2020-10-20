@@ -1,9 +1,13 @@
 import { saveJournalEntry, useJournalEntries, editJournalEntry } from "./journalDataProvider.js"
 import { setupAndRenderCharacterCounter } from "./characterCounter.js"
 import { getMoods, useMoods } from "./moodProvider.js"
+import { useTags, getTags, saveTag } from "./tagProvider.js"
+import { saveEntryTag } from "./entryTagsProvider.js"
+import { findTagsByEntryId, tagEditHtml } from "./tags.js"
 
 const contentCharacterLimit = 200
 const conceptCharacterLimit = 20
+const tagsCharacterLimit = 20
 const contentTarget = document.querySelector(".current-entry")
 const eventHub = document.querySelector(".container")
 const formElements = {}
@@ -14,22 +18,28 @@ eventHub.addEventListener("click", clickEvent => {
     const [prefix, entryId] = clickEvent.target.className.split("--")
 
     getFormElements(entryId)
-    
+
     const formData = {
       date: formElements.date.value,
       moodId: parseInt(formElements.moodId.value),
       concept: formElements.concept.value, 
-      entry: formElements.entry.value
+      entry: formElements.entry.value,
     }
+
     if (entryId === "0") {
       saveJournalEntry(formData)
+      .then( newEntryId => {
+        saveEntryTags(newEntryId)
+      })
     }
     else {
-      formData.id = parseInt(formElements.id.value)
+      formData.id = parseInt(entryId)
       editJournalEntry(formData)
-
+        .then( () => {
+          saveEntryTags(entryId)
+        })
     }
-
+    
   }
 })
 
@@ -55,6 +65,7 @@ eventHub.addEventListener("click", clickEvent => {
 
 export const listForm = () => {
   getMoods()
+  .then(getTags)
     .then( () => {
       render()
     })
@@ -82,43 +93,70 @@ const render = (entryData = {}, target = contentTarget) => {
       <label for="journalDate">Date of entry</label>
       <input type="date" name="journalDate" id="current-entry-journalDate--${entryData.id}" value="${entryData.date}">
     </fieldset>
-  </form>
-    <form action="">
-      <fieldset>
-        <label for="mood">Mood</label>
-        <select name="mood" id="current-entry-mood--${entryData.id}" >
-          ${moodsOptions}
-        </select>
-      </fieldset>
-    </form>
-    <form action="">
-      <fieldset>
-        <label for="conceptCovered">Concept Covered</label>
-        <input type="text" name="conceptCovered" id="current-entry-conceptCovered--${entryData.id}" maxlength=${conceptCharacterLimit} value="${entryData.concept}">
-        ${setupAndRenderCharacterCounter( `current-entry-conceptCovered--${entryData.id}`, conceptCharacterLimit )}
-      </fieldset>
-    </form>
-    <form action="">
-      <fieldset>
-        <label for="journalEntry">Journal Entry</label>
-        <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
-        ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
-      </fieldset>
-    </form>
+    <fieldset>
+      <label for="mood">Mood</label>
+      <select name="mood" id="current-entry-mood--${entryData.id}" >
+        ${moodsOptions}
+      </select>
+    </fieldset>
+    <fieldset>
+      <label for="conceptCovered">Concept Covered</label>
+      <input type="text" name="conceptCovered" id="current-entry-conceptCovered--${entryData.id}" maxlength=${conceptCharacterLimit} value="${entryData.concept}">
+      ${setupAndRenderCharacterCounter( `current-entry-conceptCovered--${entryData.id}`, conceptCharacterLimit )}
+    </fieldset>
+    <fieldset>
+      <label for="journalEntry">Journal Entry</label>
+      <textarea name="journalEntry" rows="4" cols="50" id="current-entry-content--${entryData.id}" maxlength=${contentCharacterLimit}>${entryData.entry}</textarea>
+      ${setupAndRenderCharacterCounter( `current-entry-content--${entryData.id}`, contentCharacterLimit )}
+    </fieldset>
+    <fieldset>
+      <label for="tags">Tags</label>
+      <input type="text" name="tags" id="current-entry-tags--${entryData.id}" maxlength=${tagsCharacterLimit} value="">
+      ${tagForm(entryData)}
+    </fieldset>
+    <fieldset>
     ${submissionControls(entryData)}
-  </section>
+    </fieldset>
+    </form>
+  </form>
   `
 }
 
 
-const getFormElements = (entryId) => {
-  formElements.id = {}
-  formElements.id.value = entryId
-  formElements.date = document.querySelector(`#current-entry-journalDate--${entryId}`)
-  formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
-  formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
-  formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
+const saveEntryTags = newEntryId => {
+  const tagsArray = formElements.tags.value.split(",")
+
+  const tagIdPromises = tagsArray.map(inputTag => {
+    if (useTags().some( t => t.subject === inputTag)) {
+      return useTags().find( t => t.subject === inputTag ).id
+    }
+    else {
+      return saveTag( { subject: inputTag } )
+    }
+  })
+
+  Promise.all(tagIdPromises)
+  .then( resolvedIds => {
+    resolvedIds.forEach( tagId => {
+      saveEntryTag( 
+        {
+          entryId: parseInt(newEntryId), 
+          tagId: tagId
+        })
+      })
+  })
 }
+
+const tagForm = entryData => {
+  if(entryData.id !== 0){
+    return tagEditHtml(entryData.id)
+  }
+  else {
+    return ''
+  }
+}
+
+
 
 const submissionControls = entryData => {
   if(entryData.id === 0){
@@ -130,4 +168,12 @@ const submissionControls = entryData => {
     <button type="button" class="current-entry-discard--${entryData.id}">Discard Edits</button>
     `
   }
+}
+
+const getFormElements = (entryId) => {
+  formElements.date = document.querySelector(`#current-entry-journalDate--${entryId}`)
+  formElements.moodId = document.querySelector(`#current-entry-mood--${entryId}`)
+  formElements.concept = document.querySelector(`#current-entry-conceptCovered--${entryId}`)
+  formElements.entry = document.querySelector(`#current-entry-content--${entryId}`)
+  formElements.tags = document.querySelector(`#current-entry-tags--${entryId}`)
 }
